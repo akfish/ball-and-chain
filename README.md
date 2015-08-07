@@ -2,6 +2,12 @@
 
 Chainable API builder with state transition.
 
+## Install
+
+```bash
+npm install --save ball-and-chain
+```
+
 ## Quick Examples
 
 ```coffee
@@ -43,6 +49,8 @@ c.a(1)
 # Now in "bar" state, done can be called
 # Break chain, return 1, back to "ready" state
 ret = c.done
+# Or chained together
+ret = c.whatever('dude').a(1).done
 # output "1"
 console.log ret
 ```
@@ -165,3 +173,7 @@ Argument | Type | Description
 -------- | --------| -----------------
 `key` | `string` | Key
 `value` | `object` | Value (optional). If specified, sets the value. Otherwise gets the value.
+
+### `Chinable.extend(proto)`
+
+Helper for pure JavaScript usage that creates derived class.

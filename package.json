@@ -1,7 +1,7 @@
 {
   "name": "ball-and-chain",
-  "version": "1.0.0",
-  "description": "Chainable API builder",
+  "version": "1.0.1",
+  "description": "Chainable API builder with state transition",
   "main": "lib/index.coffee",
   "scripts": {
     "test": "gulp test"
