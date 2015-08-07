@@ -5,7 +5,6 @@ coffee = heap.require('gulp-coffee')
 mocha = heap.require('gulp-mocha')
 
 mochaOpts =
-  # require: [path.join(__dirname, '/test/mock')]
   grep: cli.opts['only']
   globals: ['chai', 'expect']
   require: [path.join(__dirname, '/test/common')]
