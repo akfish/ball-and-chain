@@ -18,6 +18,25 @@ describe "Chainable", ->
       expect(c, '.bar').to.have.property('bar').that.is.a('function')
       expect(c, '.g').to.have.property('g').that.is.a('function')
 
+    it "in constructor (JavaScript)", ->
+      C = `
+      Chainable.extend({
+        constructor: function() {
+          this.config("foo", ['ready'])
+            .method("foo", function(next, bar) { console.log("Foo #{bar}")})
+            .method("bar", function(next, bar) { console.log("Bar #{bar}")})
+            .config()
+            .method("g", function(next, f) { console.log("g#{f}")})
+            .finish()
+        }
+        })
+      `
+      c = new C()
+
+      expect(c, '.foo').to.have.property('foo').that.is.a('function')
+      expect(c, '.bar').to.have.property('bar').that.is.a('function')
+      expect(c, '.g').to.have.property('g').that.is.a('function')
+
 
     it "via config()", ->
       c = new Chainable()
@@ -98,6 +117,7 @@ describe "Chainable", ->
         .finish()
 
       expect(c.foo(1), 'break chain').to.equal(1)
+      expect(c._state_name, "back to ready state").to.equal("ready")
   describe "state", ->
     it "should transit when next() is called", ->
       c = new Chainable()

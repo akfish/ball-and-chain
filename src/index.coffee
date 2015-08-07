@@ -51,6 +51,22 @@ is_prop = (h) ->
 
 module.exports =
 class Chainable extends EventEmitter
+  @extend: (proto) ->
+    derived = class extends @
+      constructor: ->
+        super()
+        if proto?.hasOwnProperty 'constructor'
+          proto.constructor.apply @, arguments
+
+    if proto?
+      for own key, value of proto
+        derived::[key] = value
+
+    derived::__super = ->
+      derived.__super__.constructor.apply @, arguments
+
+    return derived
+
   constructor: ->
     @_state_name = "init"
     @_states = {}
@@ -143,6 +159,8 @@ class Chainable extends EventEmitter
       if next_state?
         safely @, @_goto, next_state
         return @
+      # Go back to ready state
+      safely @, @_goto, "ready"
       # Break chain
       return ret
 
